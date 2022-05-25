@@ -1,0 +1,53 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+class Employee {
+private:
+	string firstName;
+	string lastName;
+	int age;
+
+public:
+	Employee(string, string, int);
+
+	string getFname() { return firstName; }
+	string getLname() { return lastName; }
+	int getAge() { return age; } 
+
+};
+
+Employee::Employee(string fName, string lName, int a) {
+	firstName = fName;
+	lastName = lName;
+	age = a;
+}
+
+void ouputline(Employee w)
+{
+	cout << setw(10) << "First name" << setw(20) << "Last name" << setw(10) << "age" << endl;
+	cout << setw(5) << w.getFname() << setw(23) << w.getLname() << setw(11) << w.getAge() << endl;
+}
+
+
+int main() {
+
+	Employee worker1("Andrew", "Paul", 32);
+
+
+	fstream file1;  
+	file1.open("Employee", ios::ate); 
+	cout << "file employee created" << endl;
+
+	file1.write((char*)&worker1, sizeof(worker1));  
+	file1.read((char*)&worker1, sizeof(worker1));
+
+	ouputline(worker1); 
+
+
+
+	file1.close();  
+}
